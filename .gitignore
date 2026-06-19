@@ -1,0 +1,16 @@
+
+.env
+
+
+instance/
+*.db
+
+
+__pycache__/
+*.pyc
+*.pyo
+
+.DS_Store
+Thumbs.db
+
+*.pdf

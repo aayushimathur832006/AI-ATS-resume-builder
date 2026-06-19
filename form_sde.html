@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Resume Portfolio | Builder & Optimizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Urbanist', sans-serif; }
+        .form-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .form-card:focus-within {
+            border-color: #6366f1;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-[#030712] text-slate-200 min-h-screen py-10 px-6">
+
+    <main class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-extrabold text-xs tracking-[0.2em] uppercase mb-4 inline-block">
+                <i class="fa-solid fa-rocket mr-2"></i> Resume & Portfolio SaaS
+            </span>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 text-white">
+                Build & Optimize Your Identity
+            </h1>
+            <p class="text-slate-400 font-medium max-w-xl mx-auto">
+                Create resume, analyze ATS Score, and publish dynamic interactive web portfolio instantly.
+            </p>
+        </div>
+
+        {% if analysis %}
+        <div class="mb-10 p-8 rounded-[2rem] border-2 {% if analysis.score >= 80 %}border-emerald-500/40 bg-emerald-500/5{% elif analysis.score >= 50 %}border-amber-500/40 bg-amber-500/5{% else %}border-rose-500/40 bg-rose-500/5{% endif %}">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <span class="text-xs font-black uppercase tracking-[0.1em] opacity-60">ATS Health Score</span>
+                    <h3 class="text-5xl font-black mt-1 {% if analysis.score >= 80 %}text-emerald-400{% elif analysis.score >= 50 %}text-amber-400{% else %}text-rose-400{% endif %}">
+                        {{ analysis.score }}<span class="text-2xl opacity-50">/100</span>
+                    </h3>
+                </div>
+                <div class="flex-1">
+                    <h4 class="text-xs font-black uppercase tracking-wider opacity-60 mb-2">Optimizer Feedback:</h4>
+                    <ul class="space-y-2 text-sm font-semibold">
+                        {% for fb in analysis.feedback %}
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-info mt-1 {% if analysis.score >= 80 %}text-emerald-400{% elif analysis.score >= 50 %}text-amber-400{% else %}text-rose-400{% endif %}"></i>
+                            <span>{{ fb }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="space-y-8">
+            
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-user"></i></div>
+                    <h2 class="text-lg font-black text-white">Personal Information</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Full Name</label>
+                        <input form="action-form" type="text" name="name" value="{{ portfolio.name if portfolio.name else '' }}" required placeholder="John Doe" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Email Address</label>
+                        <input form="action-form" type="email" name="email" value="{{ portfolio.email if portfolio.email else '' }}" required placeholder="john@example.com" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number</label>
+                        <input form="action-form" type="tel" name="phone" value="{{ portfolio.phone if portfolio.phone else '' }}" required placeholder="+1 234 567 890" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h2 class="text-lg font-black text-white">Summary & Skills</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Professional Summary</label>
+                        <textarea form="action-form" name="summary" rows="3" required placeholder="Write a short pitch about yourself..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition resize-none">{{ portfolio.summary if portfolio.summary else '' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Skills <span class="text-slate-500 font-medium">(Comma Separated)</span></label>
+                        <input form="action-form" type="text" name="skills" value="{{ portfolio.skills if portfolio.skills else '' }}" required placeholder="Python, React, Flask, Data Structures" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-briefcase"></i></div>
+                    <h2 class="text-lg font-black text-white">Work Experience</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Company Name</label>
+                        <input form="action-form" type="text" name="exp_company" value="{{ portfolio.exp_company if portfolio.exp_company else '' }}" required placeholder="Tech Corp" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Role</label>
+                        <input form="action-form" type="text" name="exp_role" value="{{ portfolio.exp_role if portfolio.exp_role else '' }}" required placeholder="Software Engineer" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Responsibilities & Achievements</label>
+                        <textarea form="action-form" name="exp_responsibilities" rows="3" required placeholder="E.g., Engineered backend scalable APIs, improved system latency by 40%..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition resize-none">{{ portfolio.exp_responsibilities if portfolio.exp_responsibilities else '' }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h2 class="text-lg font-black text-white">Projects</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Project Title</label>
+                        <input form="action-form" type="text" name="proj_title" value="{{ portfolio.proj_title if portfolio.proj_title else '' }}" required placeholder="SaaS Portfolio Generator" class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Description</label>
+                        <textarea form="action-form" name="proj_desc" rows="3" required placeholder="Briefly describe the project architecture and features..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition resize-none">{{ portfolio.proj_desc if portfolio.proj_desc else '' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Live Link / GitHub Code</label>
+                        <input form="action-form" type="url" name="proj_link" value="{{ portfolio.proj_link if portfolio.proj_link else '' }}" required placeholder="https://github.com/..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-semibold outline-none focus:ring-2 focus:ring-indigo-500 text-white transition">
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-palette"></i></div>
+                    <h2 class="text-lg font-black text-white">Portfolio Theme Color</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <label class="relative flex items-center justify-between p-4 bg-black/40 border-2 border-white/10 rounded-2xl cursor-pointer hover:border-indigo-500 transition">
+                        <span class="font-black text-sm text-slate-300"><i class="fa-solid fa-circle text-indigo-500 mr-2"></i> Indigo</span>
+                        <input form="action-form" type="radio" name="selected_theme" value="indigo" {% if portfolio.selected_theme == 'indigo' or not portfolio.selected_theme %}checked{% endif %} class="w-4 h-4 accent-indigo-600">
+                    </label>
+                    <label class="relative flex items-center justify-between p-4 bg-black/40 border-2 border-white/10 rounded-2xl cursor-pointer hover:border-emerald-500 transition">
+                        <span class="font-black text-sm text-slate-300"><i class="fa-solid fa-circle text-emerald-500 mr-2"></i> Emerald</span>
+                        <input form="action-form" type="radio" name="selected_theme" value="emerald" {% if portfolio.selected_theme == 'emerald' %}checked{% endif %} class="w-4 h-4 accent-emerald-600">
+                    </label>
+                    <label class="relative flex items-center justify-between p-4 bg-black/40 border-2 border-white/10 rounded-2xl cursor-pointer hover:border-rose-500 transition">
+                        <span class="font-black text-sm text-slate-300"><i class="fa-solid fa-circle text-rose-500 mr-2"></i> Rose</span>
+                        <input form="action-form" type="radio" name="selected_theme" value="rose" {% if portfolio.selected_theme == 'rose' %}checked{% endif %} class="w-4 h-4 accent-rose-600">
+                    </label>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-10 rounded-[2rem] form-card space-y-6 border-indigo-500/30">
+                <div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-bullseye"></i></div>
+                    <h2 class="text-lg font-black text-white">ATS Keyword & Metrics Optimizer</h2>
+                </div>
+                <form id="action-form" action="/analyze-resume" method="POST" class="space-y-6">
+                    <input type="hidden" name="name" value="{{ portfolio.name if portfolio.name else '' }}">
+                    <input type="hidden" name="email" value="{{ portfolio.email if portfolio.email else '' }}">
+                    <input type="hidden" name="phone" value="{{ portfolio.phone if portfolio.phone else '' }}">
+                    <input type="hidden" name="summary" value="{{ portfolio.summary if portfolio.summary else '' }}">
+                    <input type="hidden" name="skills" value="{{ portfolio.skills if portfolio.skills else '' }}">
+                    <input type="hidden" name="exp_company" value="{{ portfolio.exp_company if portfolio.exp_company else '' }}">
+                    <input type="hidden" name="exp_role" value="{{ portfolio.exp_role if portfolio.exp_role else '' }}">
+                    <input type="hidden" name="exp_responsibilities" value="{{ portfolio.exp_responsibilities if portfolio.exp_responsibilities else '' }}">
+                    <input type="hidden" name="proj_title" value="{{ portfolio.proj_title if portfolio.proj_title else '' }}">
+                    <input type="hidden" name="proj_desc" value="{{ portfolio.proj_desc if portfolio.proj_desc else '' }}">
+                    <input type="hidden" name="proj_link" value="{{ portfolio.proj_link if portfolio.proj_link else '' }}">
+                    <input type="hidden" name="selected_theme" value="{{ portfolio.selected_theme if portfolio.selected_theme else 'indigo' }}">
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Paste Job Description (JD) here</label>
+                        <textarea name="jd_text" rows="6" placeholder="Paste target company JD to verify compatibility score against your resume metrics..." class="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-500 text-white transition resize-none"></textarea>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button type="submit" formaction="/analyze-resume" class="flex-1 bg-white/5 border border-white/10 hover:border-indigo-500 hover:bg-indigo-500/5 text-white font-black text-xs tracking-[0.1em] py-4 px-6 rounded-2xl transition uppercase cursor-pointer">
+                            <i class="fa-solid fa-magnifying-glass mr-2"></i> Check ATS Health Score
+                        </button>
+                        <button type="submit" formaction="/save-portfolio" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs tracking-[0.1em] py-4 px-6 rounded-2xl shadow-[0_0_30px_rgba(99,102,241,0.3)] transition uppercase cursor-pointer">
+                            <i class="fa-solid fa-globe mr-2"></i> Publish Interactive Portfolio
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" formaction="/generate-pdf" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs tracking-[0.1em] py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(16,185,129,0.2)] transition uppercase cursor-pointer">
+                            <i class="fa-solid fa-file-pdf mr-2"></i> Download PDF Resume Directly
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if portfolio and portfolio.name %}
+        <div class="mt-16">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-black text-white"><i class="fa-solid fa-eye mr-2 text-indigo-400"></i> Live Portfolio Preview</h2>
+                <p class="text-xs text-slate-500 uppercase tracking-wider font-extrabold mt-1">Theme Color: {{ portfolio.selected_theme | default('indigo') | upper }}</p>
+            </div>
+            
+            <iframe src="/p/{{ (portfolio.name | lower | replace(' ', '') + '123') if portfolio.name else 'preview123' }}" class="w-full h-[800px] rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden bg-slate-950"></iframe>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer class="py-10 text-center text-slate-600 text-xs font-black tracking-[0.2em] uppercase">
+        Built with Professional Portfolio Suite
+    </footer>
+
+</body>
+</html>
