@@ -10,7 +10,6 @@
 
  Dynamic Web Portfolio Publisher: Instantly publishes an interactive web portfolio with dynamic theme color selections (Indigo, Emerald, Rose) that adapt on the fly.
 
- Persistent Storage: Uses SQLite and SQLAlchemy to securely store user profiles and portfolio data.
 
  Tech Stack
  Backend: Python, Flask, Flask-SQLAlchemy, Google GenAI SDK (Gemini 2.5-flash)
