@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ portfolio.name }} | Professional Software Engineer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #030712;
+            color: #e2e8f0;
+        }
+
+        .bento-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 2.5rem;
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        .bento-card:hover { 
+            transform: translateY(-4px); 
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Pure CSS Theme injections */
+        .theme-dot-emerald { background-color: #10b981; box-shadow: 0 0 16px #10b981; }
+        .theme-dot-rose { background-color: #e11d48; box-shadow: 0 0 16px #e11d48; }
+        .theme-dot-indigo { background-color: #6366f1; box-shadow: 0 0 16px #6366f1; }
+
+        .theme-text-emerald { color: #10b981; }
+        .theme-text-rose { color: #e11d48; }
+        .theme-text-indigo { color: #6366f1; }
+
+        .theme-bg-emerald { background-color: #10b981; }
+        .theme-bg-rose { background-color: #e11d48; }
+        .theme-bg-indigo { background-color: #6366f1; }
+
+        .theme-border-emerald:hover { border-color: #10b981; }
+        .theme-border-rose:hover { border-color: #e11d48; }
+        .theme-border-indigo:hover { border-color: #6366f1; }
+
+        .profile-link { transition: all 0.2s ease; }
+        .profile-link-emerald:hover { color: #10b981; text-shadow: 0 0 20px #10b981; }
+        .profile-link-rose:hover { color: #e11d48; text-shadow: 0 0 20px #e11d48; }
+        .profile-link-indigo:hover { color: #6366f1; text-shadow: 0 0 20px #6366f1; }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-indigo-500/30 pb-20">
+
+    <nav class="sticky top-6 z-50 max-w-6xl mx-auto px-6">
+        <div class="bg-[#030712]/70 backdrop-blur-xl border border-white/10 rounded-3xl px-6 py-4 flex justify-between items-center shadow-2xl">
+            <div class="text-xl font-black tracking-tighter flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl flex items-center justify-center text-white {% if portfolio.selected_theme == 'emerald' %}theme-bg-emerald{% elif portfolio.selected_theme == 'rose' %}theme-bg-rose{% else %}theme-bg-indigo{% endif %}">
+                    <i class="fa-solid fa-code text-xs"></i>
+                </div>
+                {{ portfolio.name.split()[0] | upper }}<span class="{% if portfolio.selected_theme == 'emerald' %}theme-text-emerald{% elif portfolio.selected_theme == 'rose' %}theme-text-rose{% else %}theme-text-indigo{% endif %}">dev</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#projects" class="text-xs font-black tracking-widest text-slate-400 hover:text-white transition uppercase hidden md:block">Projects</a>
+                <a href="#experience" class="text-xs font-black tracking-widest text-slate-400 hover:text-white transition uppercase hidden md:block">Experience</a>
+                <form action="/generate-pdf" method="POST" class="m-0">
+                    <input type="hidden" name="name" value="{{ portfolio.name }}">
+                    <input type="hidden" name="email" value="{{ portfolio.email }}">
+                    <input type="hidden" name="phone" value="{{ portfolio.phone }}">
+                    <input type="hidden" name="summary" value="{{ portfolio.summary }}">
+                    <input type="hidden" name="skills" value="{{ portfolio.skills }}">
+                    <input type="hidden" name="exp_company" value="{{ portfolio.exp_company }}">
+                    <input type="hidden" name="exp_role" value="{{ portfolio.exp_role }}">
+                    <input type="hidden" name="exp_responsibilities" value="{{ portfolio.exp_responsibilities }}">
+                    <input type="hidden" name="proj_title" value="{{ portfolio.proj_title }}">
+                    <input type="hidden" name="proj_desc" value="{{ portfolio.proj_desc }}">
+                    <button type="submit" class="px-6 py-3 rounded-2xl text-xs font-black text-white hover:opacity-90 transition cursor-pointer border-0 shadow-lg {% if portfolio.selected_theme == 'emerald' %}theme-bg-emerald{% elif portfolio.selected_theme == 'rose' %}theme-bg-rose{% else %}theme-bg-indigo{% endif %}">
+                        <i class="fa-solid fa-file-pdf mr-2"></i> RESUME
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="md:col-span-2 p-10 bento-card flex flex-col justify-end min-h-[460px] relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-96 h-96 {% if portfolio.selected_theme == 'emerald' %}theme-bg-emerald{% elif portfolio.selected_theme == 'rose' %}theme-bg-rose{% else %}theme-bg-indigo{% endif %} opacity-10 blur-[120px] rounded-full transition duration-500 group-hover:opacity-20"></div>
+            
+            <span class="text-xs font-extrabold tracking-[0.25em] uppercase mb-5 flex items-center gap-3 {% if portfolio.selected_theme == 'emerald' %}theme-text-emerald{% elif portfolio.selected_theme == 'rose' %}theme-text-rose{% else %}theme-text-indigo{% endif %}">
+                <span class="w-2.5 h-2.5 rounded-full animate-pulse {% if portfolio.selected_theme == 'emerald' %}theme-bg-emerald{% elif portfolio.selected_theme == 'rose' %}theme-bg-rose{% else %}theme-bg-indigo{% endif %}"></span> Available for Hire
+            </span>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tightest mb-6 leading-none text-white select-none">
+                Hi, I am <br/>{{ portfolio.name | default('Developer Name') }}
+            </h1>
+            <p class="text-lg text-slate-400 max-w-2xl font-medium leading-relaxed border-l-2 border-white/10 pl-5">
+                {{ portfolio.summary | default('Passionate software developer expert turning business requirements into scalable tech products.') }}
+            </p>
+        </div>
+
+        <div class="p-8 bento-card flex flex-col justify-between min-h-[460px] bg-gradient-to-b from-white/5 to-transparent">
+            <div>
+                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-6">Reach Out Details</h3>
+                <div class="space-y-6">
+                    <div>
+                        <span class="block text-[9px] font-black uppercase tracking-wider text-slate-600 mb-1">Direct Work Email</span>
+                        <a href="mailto:{{ portfolio.email }}" class="inline-flex items-center gap-3 text-sm font-black profile-link text-slate-200 {% if portfolio.selected_theme == 'emerald' %}profile-link-emerald{% elif portfolio.selected_theme == 'rose' %}profile-link-rose{% else %}profile-link-indigo{% endif %}">
+                            <i class="fa-solid fa-envelope-open-text text-lg opacity-80"></i> {{ portfolio.email }}
+                        </a>
+                    </div>
+                    <div>
+                        <span class="block text-[9px] font-black uppercase tracking-wider text-slate-600 mb-1">Phone Line</span>
+                        <p class="text-sm font-black text-slate-300 tracking-wide">{{ portfolio.phone | default('+91-0000000000') }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-white/5">
+                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-5">Digital Profiles</h3>
+                <div class="flex gap-3">
+                    <a href="{{ portfolio.proj_link }}" target="_blank" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-slate-800 transition profile-link text-slate-300 {% if portfolio.selected_theme == 'emerald' %}profile-link-emerald{% elif portfolio.selected_theme == 'rose' %}profile-link-rose{% else %}profile-link-indigo{% endif %}" title="Project/GitHub Source Reference">
+                        <i class="fa-solid fa-code-branch text-base"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-slate-800 transition profile-link text-slate-300 {% if portfolio.selected_theme == 'emerald' %}profile-link-emerald{% elif portfolio.selected_theme == 'rose' %}profile-link-rose{% else %}profile-link-indigo{% endif %}" title="LinkedIn Profile">
+                        <i class="fa-brands fa-linkedin-in text-base"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-3 p-10 bento-card">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2">Expertise & Core Competencies</h3>
+                    <h2 class="text-xl font-extrabold text-white">Engineering Tech Stack</h2>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-slate-400">
+                    <i class="fa-solid fa-bolt-lightning {% if portfolio.selected_theme == 'emerald' %}theme-text-emerald{% elif portfolio.selected_theme == 'rose' %}theme-text-rose{% else %}theme-text-indigo{% endif %}"></i> Full-Stack Capability
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-3">
+                {% if portfolio.skills %}
+                    {% set skills_list = portfolio.skills.split(',') %}
+                    {% for skill in skills_list %}
+                        <span class="px-6 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-sm font-bold transition cursor-default tracking-wide text-slate-300 {% if portfolio.selected_theme == 'emerald' %}theme-border-emerald{% elif portfolio.selected_theme == 'rose' %}theme-border-rose{% else %}theme-border-indigo{% endif %} hover:border-2 hover:text-white">
+                            {{ skill.strip() | title }}
+                        </span>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-xs text-slate-500 font-black">Python, React, Database, DevOps...</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="experience" class="md:col-span-3 p-10 bento-card bg-gradient-to-r from-transparent via-white/[0.01] to-transparent">
+            <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-8">Career Journey</h3>
+            <div class="flex flex-col md:flex-row gap-10 items-start">
+                <div class="w-full md:w-1/3">
+                    <span class="block text-[9px] font-extrabold tracking-widest uppercase mb-2 text-slate-500">Current Engagement</span>
+                    <h4 class="text-2xl font-black text-slate-100 tracking-tight leading-tight">{{ portfolio.exp_role | default('Software Engineer Intern') }}</h4>
+                    <p class="text-base font-bold mt-2 tracking-wide {% if portfolio.selected_theme == 'emerald' %}theme-text-emerald{% elif portfolio.selected_theme == 'rose' %}theme-text-rose{% else %}theme-text-indigo{% endif %}">{{ portfolio.exp_company | default('Company Name') }}</p>
+                </div>
+                <div class="w-full md:w-2/3 border-l-2 border-white/5 pl-8 py-2 relative">
+                    <div class="absolute -left-[5px] top-6 w-2 h-2 rounded-full {% if portfolio.selected_theme == 'emerald' %}theme-dot-emerald{% elif portfolio.selected_theme == 'rose' %}theme-dot-rose{% else %}theme-dot-indigo{% endif %}"></div>
+                    <span class="block text-[9px] font-black uppercase tracking-widest text-slate-500 mb-3">Key Deliverables & Responsibilities</span>
+                    <p class="text-base text-slate-400 leading-relaxed font-medium">
+                        {{ portfolio.exp_responsibilities | default('Achievements and work deliveries listed dynamically.') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects" class="md:col-span-3 p-10 bento-card border-white/10 bg-gradient-to-br from-slate-900/80 to-transparent relative overflow-hidden">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                <div>
+                    <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-3">Featured Core Project Showcase</h3>
+                    <h2 class="text-4xl font-black tracking-tightest text-white">{{ portfolio.proj_title | default('Project Showcase Title') }}</h2>
+                </div>
+                <div class="flex gap-4">
+                    <a href="{{ portfolio.proj_link }}" target="_blank" class="px-8 py-4 rounded-2xl bg-white text-black font-black text-xs hover:bg-slate-200 transition cursor-pointer tracking-wider shadow-[0_0_40px_rgba(255,255,255,0.15)] flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> LIVE DEMO/LINK
+                    </a>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <p class="text-xl text-slate-400 leading-relaxed font-medium">
+                    {{ portfolio.proj_desc | default('Architecting scalable digital products with performance efficiency metrics.') }}
+                </p>
+                <div class="rounded-3xl border border-white/10 bg-black/50 p-4 relative h-[320px] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-900/10 to-transparent rounded-3xl"></div>
+                    <div class="w-full h-full rounded-2xl border border-white/10 bg-[#0b0f19] flex flex-col items-center justify-center p-8 text-center relative group">
+                        <div class="w-16 h-16 rounded-2xl border border-white/10 flex items-center justify-center mb-6 bg-white/5 text-slate-400 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-earth-americas text-3xl"></i>
+                        </div>
+                        <h4 class="text-sm font-extrabold tracking-widest text-white uppercase mb-2">Deployed Architecture</h4>
+                        <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Live Connected Application Framework</p>
+                        <a href="{{ portfolio.proj_link }}" target="_blank" class="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/10 bg-white/5 text-[10px] font-black tracking-widest text-white hover:bg-white hover:text-black transition uppercase">
+                            Open Project Repository <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-12 text-center max-w-4xl mx-auto border-t border-white/5 mt-16">
+        <p class="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em]">
+            Built with Professional SaaS Portfolio Builder Engine
+        </p>
+    </footer>
+
+</body>
+</html>
